@@ -3,6 +3,7 @@ import './Modal.css';
 import Aux from '../../../Aux copy';
 import Backdrop from '../Backdrop/Backdrop';
 
+
 const modal = (props) => (
     <Aux>
         <Backdrop show={props.show} clicked={props.cancelOrder} />
