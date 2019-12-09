@@ -34,6 +34,8 @@ export default class BurgerIngredient extends Component {
             case ('bacon'):
                 ingredient = <div className={'Bacon'}></div>
                 break;
+            default:
+                ingredient = null;
         }
         return ingredient;
     }
