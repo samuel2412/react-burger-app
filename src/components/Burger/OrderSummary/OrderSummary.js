@@ -2,6 +2,7 @@ import React,{ Component } from 'react'
 import Aux from '../../../hoc/AuxDiv/AuxCopy'
 import Button from '../../UI/Button/Button'
 
+
 export default class OrderSummary extends Component {
 
     render(){

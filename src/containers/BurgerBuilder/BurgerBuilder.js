@@ -97,6 +97,7 @@ class BurgerBuilder extends Component {
             .then(response => {
                 this.setState({ loading: false, purchasing: false })
                 console.log(response);
+                this.props.history.push("/checkout");
             })
             .catch(error => {
                 this.setState({ loading: false, purchasing: false })
