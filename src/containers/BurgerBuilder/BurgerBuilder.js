@@ -79,31 +79,41 @@ class BurgerBuilder extends Component {
 
     continuePurchase = () => {
         this.setState({ loading: true })
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            deliveryMethod: 'fastest',
-            customer: {
-                name: 'Samuel',
-                email: 'teste@teste',
-                address: {
-                    street: 'Avenida Paulista',
-                    zipCode: '01311-936',
-                    country: 'Brasil'
-                }
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     deliveryMethod: 'fastest',
+        //     customer: {
+        //         name: 'Samuel',
+        //         email: 'teste@teste',
+        //         address: {
+        //             street: 'Avenida Paulista',
+        //             zipCode: '01311-936',
+        //             country: 'Brasil'
+        //         }
+        //     }
+        // }
+        // axios.post('/orders.json', order)
+        //     .then(response => {
+        //         this.setState({ loading: false, purchasing: false })
+        //         console.log(response);
+        //     })
+        //     .catch(error => {
+        //         this.setState({ loading: false, purchasing: false })
+        //         console.log(error);
+        //     });
+            const queryParams =[];
+            for( let i in this.state.ingredients){
+                queryParams.push(encodeURIComponent(i)+
+                '='+
+                encodeURIComponent(this.state.ingredients[i]) )
             }
-        }
-        axios.post('/orders.json', order)
-            .then(response => {
-                this.setState({ loading: false, purchasing: false })
-                console.log(response);
-                this.props.history.push("/checkout");
-            })
-            .catch(error => {
-                this.setState({ loading: false, purchasing: false })
-                console.log(error);
-            });
+            const queryString = queryParams.join('&');
 
+            this.props.history.push({
+                pathname: "/checkout",
+                search: '?'+queryString
+            });
     }
 
 
