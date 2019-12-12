@@ -4,9 +4,11 @@ import './Input.css';
 const input = (props) => {
     let inputElement = null;
     const inputClass = ['InputElement'];
+    let validationError = null;
 
     if(props.invalid && props.shouldValidate && props.touched){
         inputClass.push('Invalid')
+        validationError = <p>Please enter a valid value!</p>;
     }
 
     switch (props.elementType) {
@@ -53,6 +55,7 @@ const input = (props) => {
         <div className='Input'>
             <label className='Label'>{props.label}</label>
             {inputElement}
+            {validationError}
         </div>
     );
 }
