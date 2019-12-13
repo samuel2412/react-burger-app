@@ -25,12 +25,12 @@ class BurgerBuilder extends Component {
         error: false
     }
     componentDidMount() {
-        axios.get('https://react-myburger-c854a.firebaseio.com/ingredients.json')
-            .then(response => {
-                this.setState({ ingredients: response.data })
-            }).catch(error => {
-                this.setState({error:true})
-            })
+        // axios.get('https://react-myburger-c854a.firebaseio.com/ingredients.json')
+        //     .then(response => {
+        //         this.setState({ ingredients: response.data })
+        //     }).catch(error => {
+        //         this.setState({error:true})
+        //     })
     }
 
     addIngredientHandler = (type) => {
