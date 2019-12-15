@@ -108,7 +108,7 @@ class ContactData extends Component {
             orderData: formData
         }
 
-        this.props.onOrderBurger(data);     
+        this.props.onOrderBurger(order);     
     }
 
     checkValidty(value,rules) {
@@ -193,8 +193,8 @@ const mapStateProps = state =>  {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (orderData) => dispacth(actions.puchaseBurgerStart(orderData))
+        onOrderBurger: (orderData) => dispatch(actions.puchaseBurgerStart(orderData))
     };
 }
 
-export default connect(mapStateProps)(withErrorHandler(ContactData,axios));
+export default connect(mapStateProps,mapDispatchToProps)(withErrorHandler(ContactData,axios));
