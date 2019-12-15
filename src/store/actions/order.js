@@ -21,6 +21,11 @@ export const puchaseBurgerStart = () => {
         type: actionTypes.PURCHASE_BURGER_START
     }
 }
+export const purchaseInit = () =>{
+    return{
+        type: actionTypes.PURCHASE_INIT
+    }
+}
 
 export const puchaseBurger = (orderData) => {
     return dispatch =>{
