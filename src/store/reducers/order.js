@@ -14,13 +14,13 @@ const reducer = (state = initialState,action) => {
         }
         case(actionTypes.PURCHASE_BURGER_SUCCESS):
         const newOrder = {
-            ...orderData,
+            ...action.orderData,
             id: action.orderId
         }
         return{
             ...state,
             loading:false,
-            orders = state.orders.concat(newOrder)
+            orders: state.orders.concat(newOrder)
         }
         case(actionTypes.PURCHASE_BURGER_FAIL):
         return{
