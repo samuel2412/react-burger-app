@@ -8,13 +8,9 @@ const INGREDIENT_PRICES = {
 }
 
 const initialState = {
-    ingredients: {
-        salad:0,
-        bacon:0,
-        cheese:0,
-        meat:0
-    },
+    ingredients: null,
     totalPrice: 5,
+    error: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,6 +33,17 @@ const reducer = (state = initialState, action) => {
                 ...state.ingredients,
                 [action.ingredientName]: state.ingredients[action.ingredientName]-1
             }
+        }
+        case(actionTypes.SET_INGREDIENTS):
+        return{
+            ...state,
+            ingredients: action.ingredients,
+            error: false
+        }
+        case(actionTypes.FETC_INGREDIENTS_FAILED):
+        return{
+            ...state,
+            error: true
         }
 
         default:
