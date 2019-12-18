@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import Button from '../../components/UI/Button/Button';
 import './Auth.css';
 import axios from '../../axios-orders';
@@ -80,6 +81,11 @@ class Auth extends Component {
         this.setState({orderForm: updatedOrderForm, formIsValid})
     }
 
+    onSubmitHandler = (event) =>{
+        event.preventDefault();
+        this.props.onAuth(this.state.orderForm.email,this.state.formIsValid.password);
+    }
+
     render() {
         const formElementsArray = [];
         for(let key in this.state.orderForm){
@@ -89,7 +95,7 @@ class Auth extends Component {
             });
         }
         let form = (
-            <form> 
+            <form onSubmit={this.onSubmitHandler}> 
                 {formElementsArray.map(formElement =>(
                     <Input 
                         key={formElement.id}
@@ -127,8 +133,8 @@ const mapStateProps = state =>  {
 
 const mapDispatchToProps = dispatch => {
     return {
-        
+        onAuth: (email,password) => dispatch(actions.auth(email,password))
     };
 }
 
-export default withErrorHandler(Auth,axios);
+export default connect(null,mapDispatchToProps)(withErrorHandler(Auth,axios));
