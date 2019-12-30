@@ -28,6 +28,12 @@ const initialState= {
             error: action.error,
             loading: false
         }
+        case(actionTypes.AUTH_LOGOUT) :
+        return{
+            ...state,
+            userId:null,
+            tokenId:null
+        }
         default: return state;
     }
 

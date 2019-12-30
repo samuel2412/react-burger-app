@@ -1,6 +1,13 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
+export const checkAuthTime = (expirationTime) =>{
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout());
+        }, expirationTime * 1000 )
+    }
+}
 
 export const auth = (email,password,isSignup) =>{
     return dispatch => {
@@ -19,6 +26,7 @@ export const auth = (email,password,isSignup) =>{
         .then(response => {
             console.log(response);
             dispatch(authSuccess(response.data.localId, response.data.idToken));
+            dispatch(checkAuthTime(response.data.experisIn))
         })
         .catch(err =>{
             console.log(err.response);
@@ -45,5 +53,11 @@ export const authFail = (error) =>{
     return{
         type: actionTypes.AUTH_FAIL,
         error
+    }
+}
+
+export const logout = () => {
+    return{
+       type: actionTypes.AUTH_LOGOUT 
     }
 }
