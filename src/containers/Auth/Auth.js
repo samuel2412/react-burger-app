@@ -144,7 +144,7 @@ class Auth extends Component {
 
 }
 
-const mapStateProps = state => {
+const mapStateToProps = state => {
     return {
         loading: state.authReducer.loading,
         error: state.authReducer.error
@@ -158,4 +158,4 @@ const mapDispatchToProps = dispatch => {
     };
 }
 
-export default connect(mapStateProps, mapDispatchToProps)(withErrorHandler(Auth, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Auth, axios));
