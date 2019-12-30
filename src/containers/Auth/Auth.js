@@ -77,13 +77,13 @@ class Auth extends Component {
         for(let inputIdentifier in updatedOrderForm){
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid
         }
-
+        
         this.setState({orderForm: updatedOrderForm, formIsValid})
     }
 
     onSubmitHandler = (event) =>{
         event.preventDefault();
-        this.props.onAuth(this.state.orderForm.email,this.state.formIsValid.password);
+        this.props.onAuth(this.state.orderForm.email.value,this.state.orderForm.password.value);
     }
 
     render() {
