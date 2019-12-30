@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import Aux from '../../hoc/AuxDiv/AuxCopy';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -18,19 +18,23 @@ class BurgerBuilder extends Component {
     componentDidMount() {
         this.props.onInitIngredients();
     }
-        
-        updatePurchaseState(ingredients) {
 
-            const sum = Object.keys(ingredients).map(igKey => {
-                return ingredients[igKey]
-            }).reduce((sum, el) => {
-                return sum + el;
-            }, 0);
-            return sum > 0 
-        }
-        
+    updatePurchaseState(ingredients) {
+
+        const sum = Object.keys(ingredients).map(igKey => {
+            return ingredients[igKey]
+        }).reduce((sum, el) => {
+            return sum + el;
+        }, 0);
+        return sum > 0
+    }
+
     purchaseHandler = () => {
+        if (this.props.isAuth) {
             this.setState({ purchasing: true })
+        }else{
+            this.props.history.push('/auth')
+        }
     }
 
     cancelPurchase = () => {
@@ -38,8 +42,8 @@ class BurgerBuilder extends Component {
     }
 
     continuePurchase = () => {
-            this.props.onInitPurchased();
-            this.props.history.push("/checkout");
+        this.props.onInitPurchased();
+        this.props.history.push("/checkout");
     }
 
 
@@ -52,11 +56,11 @@ class BurgerBuilder extends Component {
         let burger = this.props.error ? <p>Oops! something went wrong. Try again later.</p> : <Spinner />
         let orderSummary = null;
 
-        if (this.props.ings ) {
+        if (this.props.ings) {
             burger = (
                 <Aux>
 
-                    <Burger ingredients={this.props.ings } />
+                    <Burger ingredients={this.props.ings} />
                     <BuildControls
                         addIngredient={this.props.onIngredientAdd}
                         removeIngredient={this.props.onIngredientRemoved}
@@ -64,12 +68,13 @@ class BurgerBuilder extends Component {
                         purchasable={this.updatePurchaseState(this.props.ings)}
                         ordered={this.purchaseHandler}
                         price={this.props.totalPrice}
+                        isAuthenticated={this.props.isAuth}
                     />
                 </Aux>
 
             );
 
-            orderSummary = <OrderSummary ingredients={this.props.ings }
+            orderSummary = <OrderSummary ingredients={this.props.ings}
                 cancel={this.cancelPurchase}
                 continue={this.continuePurchase}
                 price={this.props.totalPrice}
@@ -87,28 +92,29 @@ class BurgerBuilder extends Component {
     }
 }
 
-const mapStateToProps = state =>  {
-    return{
+const mapStateToProps = state => {
+    return {
         ings: state.burgerBuilderReducer.ingredients,
         totalPrice: state.burgerBuilderReducer.totalPrice,
-        error: state.burgerBuilderReducer.error
+        error: state.burgerBuilderReducer.error,
+        isAuth: state.authReducer.tokenId !== null
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdd: (ingName) => 
-        dispatch(actions.addIngredient(ingName)),
-        
+        onIngredientAdd: (ingName) =>
+            dispatch(actions.addIngredient(ingName)),
+
         onIngredientRemoved: (ingName) =>
-        dispatch(actions.removeIngredient(ingName)),
-        
+            dispatch(actions.removeIngredient(ingName)),
+
         onInitIngredients: () =>
-        dispatch(actions.initIngredients()),
-        
-        onInitPurchased: () => 
-        dispatch(actions.purchaseInit())
+            dispatch(actions.initIngredients()),
+
+        onInitPurchased: () =>
+            dispatch(actions.purchaseInit())
     };
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios));

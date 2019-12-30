@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
 import Button from '../../components/UI/Button/Button';
 import './Auth.css';
 import axios from '../../axios-orders';
@@ -120,7 +122,7 @@ class Auth extends Component {
                     <Button btnType={'Success'} disabled={!this.state.formIsValid}>SUBMIT</Button>
                 </form>
                 <Button btnType={'Danger'} action={this.switchAuthMethod}>
-                    SWITCH TO {this.state.isSignup ? 'SIGNIN' : 'SIGNUP'}
+                    SWITCH TO {this.state.isSignup ? 'SIGN IN' : 'SIGN UP'}
                 </Button>
             </div>
         );
@@ -133,10 +135,18 @@ class Auth extends Component {
                 <p>{this.props.error.message}</p>
             )
         }
+
+        let redirect=null;
+        if(this.props.isAuth){
+            redirect = (
+                <Redirect to='/' />
+            )
+        }
         return (
             <div className={'Auth'}>
                 {errorMessage}
                 {form}
+                {redirect}
             </div>
 
         );
@@ -147,7 +157,8 @@ class Auth extends Component {
 const mapStateToProps = state => {
     return {
         loading: state.authReducer.loading,
-        error: state.authReducer.error
+        error: state.authReducer.error,
+        isAuth: state.authReducer.tokenId !== null
     };
 }
 
