@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Layout from './components/Layout/Layout';
 import BugerBuilder from './containers/BurgerBuilder/BurgerBuilder';
@@ -7,8 +8,13 @@ import Checkout from './containers/Checkout/Checkout';
 import Orders from './containers/Orders/Orders';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
+import * as actions from './store/actions/index'
 
-export default class App extends Component {
+class App extends Component {
+  componentDidMount() {
+    this.props.onAutoTryLogin();
+  }
+
   render() {
     return (
       <div>
@@ -30,5 +36,11 @@ export default class App extends Component {
     );
   }
 }
-
+const mapDispatchToProps = dispatch => {
+  return {
+    onAutoTryLogin: () =>
+      dispatch(actions.authCheckState())
+  }
+}
+export default withRouter(connect(null, mapDispatchToProps)(App));
 
