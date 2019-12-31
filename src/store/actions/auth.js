@@ -61,3 +61,10 @@ export const logout = () => {
        type: actionTypes.AUTH_LOGOUT 
     }
 }
+
+export const authRedirectPath = (path) => {
+    return{
+        type: actionTypes.AUTH_REDIRECT_PATH,
+        path
+    }
+}
