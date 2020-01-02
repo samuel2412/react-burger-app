@@ -22,6 +22,7 @@ const order = (props) => {
                 border:'1px solid #cccccc',
                 padding:'5px'
             }}
+            key= {igKey.name}
         >{igKey.name} ({igKey.amount})</span>
     })
     return (
