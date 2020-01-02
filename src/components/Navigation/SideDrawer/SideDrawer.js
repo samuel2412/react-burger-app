@@ -9,7 +9,7 @@ const sideDrawer = (props) => {
     return (
         <Aux>
         <Backdrop show={props.show} clicked={props.close}/>
-        <div className={`SideDrawer ${props.show ? 'Open' : 'Close'} `}>
+        <div className={`SideDrawer ${props.show ? 'Open' : 'Close'} `} onClick={props.close}>
            
                 <Logo height={'11%'} bottom={'32px'}/>
            
